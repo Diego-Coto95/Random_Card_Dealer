@@ -1,31 +1,38 @@
-function deckBuilder() {
+/*
+Function that adds both the numeric value and the image tag
+*/
+window.onload = function (){
+function content() {
+    const tag = ["Hearts", "Diamonds", "Spades", "Clubs"];
     const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",];
-    const suits = ["Hearts", "Diamonds", "Spades", "Clubs"];
-    const cards = [];
-    for (let s = 0; s < suits.length; s++) {
-        for (let v = 0; v < values.length; v++) {
-            const value = values[v];
-            const suit = suits[s];
-            cards.push({ value, suit });
+    const card = []; /* Array que guarda los dos valores*/
+    for (let index = 0; index < tag.length; index++) {
+        for (let i = 0; i < values.length; i++) {
+            const value = values[i];
+            const suit = tag[index];
+            card.push({ value, suit });
         }
     }
-    return cards;
+    return card;
 }
 
-const cards = deckBuilder();
+/*Function that generates a random of both numbers and tags*/
+function randomCard(cards) {
+    const allCombinations = Math.floor(Math.random() * 52);
+    const cardValue = cards[allCombinations].value; /* it's .value because 'value' is a constant*/
+    const tag = cards[allCombinations].suit;   /* it's .suit because 'suit' is a constant*/
+    let figure;
+    tag === "Diamonds" ? (figure = "&diams;") : (figure = "&" + tag.toLowerCase() + ";"); /*Give the shape of the card figures */
+    const card = document.createElement("DIV");
+    card.classList.add("card", tag.toLowerCase());
+    card.innerHTML =
+        '<span class="card-value-suit top">' + figure + '</span>' +
+        '<span class="card-suit">' + cardValue + '</span>' +
+        '<span class="card-value-suit bot">' + figure + '</span>';
+    document.body.appendChild(card);
+}
+
+const cards = content();
 randomCard(cards);
 
-function randomCard(cards) {
-    const random = Math.floor(Math.random() * 51);
-    const cardValue = cards[random].value;
-    const cardSuit = cards[random].suit;
-    let entity;
-    cardSuit === "Diamonds" ? (entity = "&diams;") : (entity = "&" + cardSuit.toLowerCase() + ";");
-    const card = document.createElement("div");
-    card.classList.add("card", cardSuit.toLowerCase());
-    card.innerHTML =
-        '<span class="card-value-suit top">' + cardValue + entity + '</span>' +
-        '<span class="card-suit">' + entity + '</span>' +
-        '<span class="card-value-suit bot">' + cardValue + entity + '</span>';
-    document.body.appendChild(card);
 }
